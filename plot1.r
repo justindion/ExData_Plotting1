@@ -1,15 +1,9 @@
-# Course project 1: Plot1
-## load the data
-rm(list = ls())
-data <- read.table("household_power_consumption.txt", header = T, 
-                   sep = ";", na.strings = "?")
-# convert the date variable to Date class
-# Plot 1
-attach(data)
-hist(Global_active_power, main = "Global Active Power", 
-     xlab = "Global Active Power (kilowatts)", col = "Red")
+dataFile <- "./data/household_power_consumption.txt"
+data <- read.table(dataFile, header=TRUE, sep=";", stringsAsFactors=FALSE, dec=".")
+subSetData <- data[data$Date %in% c("1/2/2007","2/2/2007") ,]
 
-# Save file
-dev.copy(png, file = "plot1.png", height = 480, width = 480)
+#str(subSetData)
+globalActivePower <- as.numeric(subSetData$Global_active_power)
+png("plot1.png", width=480, height=480)
+hist(globalActivePower, col="red", main="Global Active Power", xlab="Global Active Power (kilowatts)")
 dev.off()
-detach(data)
